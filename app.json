@@ -8,11 +8,11 @@
     "splash": {
       "image": "./assets/primuse_logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "black"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/2db21906-0fc0-4871-969a-0383a6ecbecf"
+      "url": "https://u.expo.dev/416aba7d-23a0-4571-9c9d-1fcfc4b48121"
     },
     "assetBundlePatterns": [
       "**/*"

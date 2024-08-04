@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, Dimensions, SafeAreaView, ScrollView, Alert } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -27,12 +27,7 @@ const getToken = async () => {
 };
 
 export default function SearchScreen({ navigation, route }) {
-  const {
-    
-    currentSong,
-    setCurrentSong,
-    
-  } = useContext(PlayerContext);
+  const { currentSong, setCurrentSong } = useContext(PlayerContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [recentSearches, setRecentSearches] = useState([]);
@@ -43,10 +38,17 @@ export default function SearchScreen({ navigation, route }) {
     getToken();
     loadRecentSearches();
 
-    if (route.params?.searchResults) {
-      setSearchResults(route.params.searchResults);
+    if (route.params?.searchQuery) {
+      setSearchQuery(route.params.searchQuery);
+      handleSearch(); // Auto search when searchQuery is passed
     }
-  }, [route.params?.searchResults]);
+  }, [route.params?.searchQuery]);
+
+  useEffect(() => {
+    if (route.params?.autoPlay && searchResults.length > 0) {
+      handlePlaySong(searchResults[0]); // Auto-play the first song if autoPlay is true
+    }
+  }, [searchResults]);
 
   const loadRecentSearches = async () => {
     const recent = await AsyncStorage.getItem('recentSearches');
